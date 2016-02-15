@@ -11,7 +11,7 @@ $this->title = 'My Yii Application';
 
         <p class="lead">You have successfully created your Yii-powered application.</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://localhost/youship/frontend/web/site/placeOrder">Place a Quote</a></p>
+        <p><a class="btn btn-lg btn-success" href="http://localhost/youship/frontend/web/site/place-order">Place a Quote</a></p>
     </div>
 
     <div class="body-content">

@@ -1,7 +1,8 @@
 <?php
 
 namespace common\models;
-
+use yii\db\Expression;
+use yii\behaviors\TimestampBehavior;
 use Yii;
 
 /**
@@ -75,6 +76,20 @@ class Orders extends \yii\db\ActiveRecord
             'deliverycond' => 'Deliverycond',
             'createdon' => 'Createdon',
             'updatedon' => 'Updatedon',
+        ];
+    }
+    
+    
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'createdon',
+                'updatedAtAttribute' => 'updatedon',
+                'value' => new Expression('NOW()'),
+            ],
         ];
     }
 }

@@ -211,7 +211,34 @@ class SiteController extends Controller
         ]);
     }
     
+    /**
+     * 
+     * creating new order by customer
+     */
     public function actionPlaceOrder(){
+        $ordermodel = new \common\models\Orders();
+        $orderinfomodel = new \common\models\OrderInfo();
         
+        if ($ordermodel->load(Yii::$app->request->post()) && $orderinfomodel->load(Yii::$app->request->post())) {
+            
+            //set required fields
+            $ordermodel->status = 1;
+            if($ordermodel->save()){
+                $orderinfomodel->order_id = $ordermodel->id;
+                $orderinfomodel->save();
+                    
+            }
+            else{
+                print_r($orderinfomodel->getErrors());
+                print_r($ordermodel->getErrors());
+                 
+            }
+            return $this->render('afterorder');
+            
+        } else { 
+            return $this->render('orderform', [
+                'ordermodel' => $ordermodel,'orderinfomodel'=>$orderinfomodel
+            ]);
+        }
     }
 }

@@ -17,6 +17,8 @@ use Yii;
  * @property integer $wooden
  * @property integer $packed
  * @property string $packagetype
+ *
+ * @property Orders $order
  */
 class OrderInfo extends \yii\db\ActiveRecord
 {
@@ -59,4 +61,14 @@ class OrderInfo extends \yii\db\ActiveRecord
             'packagetype' => 'Packagetype',
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrder()
+    {
+        return $this->hasOne(Orders::className(), ['id' => 'order_id']);
+    }
+    
+    
 }
