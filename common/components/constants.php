@@ -6,3 +6,8 @@
  * and open the template in the editor.
  */
 
+define('DOMAINURL','http://localhost/youship/frontend/web');
+define('FRONTENDURL','http://localhost/youship/frontend/web');
+define('BACKENDURL','http://localhost/youship/backend/web');
+
+
