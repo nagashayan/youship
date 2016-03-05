@@ -11,153 +11,194 @@ use kartik\date\DatePicker;
 ?>
 
 <div class="orders-form">
- <div class="container">
-     <h3>Place your order</h3>
-    <?php $form = ActiveForm::begin([
-       'id' => 'order-form',
-         'enableClientValidation' => true,
-         'enableAjaxValidation' => true,
-         
-    ]); ?>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Place your order</h3>
+                <div class="order-info-form">
+                    <?php
+                    $form = ActiveForm::begin([
+                                'id' => 'order-form',
+                                'enableClientValidation' => true,
+                                'enableAjaxValidation' => true,
+                    ]);
+                    ?>
+                    <div class="row">
+                        <div class="col-lg-9"> 
+                            <?= $form->field($ordermodel, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($ordermodel, 'title')->textInput(['maxlength' => true]) ?>
+<?= $form->field($ordermodel, 'description')->textArea(['maxlength' => true]) ?>
+                        </div>
+                    </div>
 
-    <?= $form->field($ordermodel, 'description')->textInput(['maxlength' => true]) ?>
+                    <div class="row">
+                        <div class="col-lg-3">
 
-    
 
-    <?= $form->field($ordermodel, 'offerprice')->textInput() ?>
+<?= $form->field($ordermodel, 'pickuplocation')->textInput(['maxlength' => true]) ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?=
+                            $form->field($ordermodel, 'pickuplocationtype')->textInput(['maxlength' => true])->dropDownList(
+                                    ['residential' => 'Residential', 'office' => 'Office']
+                            );
+                            ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group field-orders-pickupdate1 required ">
+                                <label class="control-label" for="orders-pickupdate1">Pickup Date</label>
+                                <?=
+                                DatePicker::widget([
+                                    'name' => 'pickupdate1',
+                                    'id' => 'datepicker1',
+                                    'value' => date('d-M-Y', strtotime('+2 days')),
+                                    'options' => ['placeholder' => 'Select issue date ...'],
+                                    'pluginOptions' => [
+                                        'format' => 'dd-M-yyyy',
+                                        'todayHighlight' => true
+                                    ]
+                                ]);
+                                ?>
 
-    <?= $form->field($ordermodel, 'pickuplocation')->textInput(['maxlength' => true]) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group field-orders-pickupdate2 ">
+                         <label class="control-label" for="orders-pickupdate2">Pickup Date</label>
+                         <? DatePicker::widget([
+                     'name' => 'pickupdate2', 
+                     'value' => date('d-M-Y', strtotime('+4 days')),
+                     'options' => ['placeholder' => 'Select issue date ...'],
+                     'pluginOptions' => [
+                         'format' => 'dd-M-yyyy',
+                         'todayHighlight' => true
+                     ]
+                     ]);
+                     ?>
+                         
+                     </div>
+                     
+                     
+                     
+                 
+                     <? $form->field($ordermodel, 'pickupcond')->textInput(['maxlength' => true]) ->dropDownList(
+                             ['before'=>'Before','after'=>'After','between'=>'Between']
+                            
+                         );
+                  ?>
+                    -->
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($ordermodel, 'deliverylocation')->textInput(['maxlength' => true]) ?>
+                        </div>
+                        <div class="col-lg-3">
+<?=
+$form->field($ordermodel, 'deliverylocationtype')->textInput(['maxlength' => true])->dropDownList(
+        ['residential' => 'Residential', 'office' => 'Office']
+);
+?>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group field-orders-deliverydate1 required ">
+                                <label class="control-label" for="orders-deliverydate1">Delivery Date</label>
+                                <?=
+                                DatePicker::widget([
+                                    'name' => 'deliverydate1',
+                                    'value' => date('d-M-Y', strtotime('+2 days')),
+                                    'options' => ['placeholder' => 'Select issue date ...'],
+                                    'pluginOptions' => [
+                                        'format' => 'dd-M-yyyy',
+                                        'todayHighlight' => true
+                                    ]
+                                ]);
+                                ?>
 
-    <?= $form->field($ordermodel, 'pickuplocationtype')->textInput(['maxlength' => true])->dropDownList(
-            ['residential'=>'Residential','office'=>'Office']           
-        ); ?>
-    
-    <div class="form-group field-orders-pickupdate1 required ">
-        <label class="control-label" for="orders-pickupdate1">Pickup Date</label>
-        <?= DatePicker::widget([
-    'name' => 'pickupdate1', 
-            'id'=>'datepicker1',
-    'value' => date('d-M-Y', strtotime('+2 days')),
-    'options' => ['placeholder' => 'Select issue date ...'],
-    'pluginOptions' => [
-        'format' => 'dd-M-yyyy',
-        'todayHighlight' => true
-    ]
-    ]);
-    ?>
-        
+                            </div>
+                        </div>
+                    </div>
+                    <!--  <div class="form-group field-orders-deliverydate2  ">
+                          <label class="control-label" for="orders-deliverydate2">Delivery Date</label>
+                          <? DatePicker::widget([
+                      'name' => 'deliverydate2', 
+                      'value' => date('d-M-Y', strtotime('+2 days')),
+                      'options' => ['placeholder' => 'Select issue date ...'],
+                      'pluginOptions' => [
+                          'format' => 'dd-M-yyyy',
+                          'todayHighlight' => true
+                      ]
+                      ]);
+                      ?>
+                          
+                      </div>
+                  
+                      <? $form->field($ordermodel, 'deliverycond')->textInput(['maxlength' => true])->dropDownList(
+                              ['before'=>'Before','after'=>'After','between'=>'Between']
+                             
+                          ); ?>
+                  
+                      
+                  
+                    <!--  order info -->
+
+                    <div class="row">
+                        <div class="col-lg-3">
+
+                            <?= $form->field($orderinfomodel, 'width')->textInput() ?>
+                        </div>
+                        <div class="col-lg-3">
+<?= $form->field($orderinfomodel, 'height')->textInput() ?>
+                        </div>
+                        <div class="col-lg-3">
+<?= $form->field($orderinfomodel, 'length')->textInput() ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?= $form->field($orderinfomodel, 'weight')->textInput() ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?=
+                            $form->field($orderinfomodel, 'breakable')->textInput()->dropDownList(
+                                    ['0' => 'No', '1' => 'Yes']
+                            );
+                            ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?=
+                            $form->field($orderinfomodel, 'wooden')->textInput()->dropDownList(
+                                    ['0' => 'No', '1' => 'Yes']
+                            );
+                            ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <?=
+                            $form->field($orderinfomodel, 'packed')->textInput()->dropDownList(
+                                    ['0' => 'No', '1' => 'Yes']
+                            );
+                            ?>
+                        </div>
+                        <div class="col-lg-3">
+                            <?=
+                            $form->field($orderinfomodel, 'packagetype')->textInput(['maxlength' => true])->dropDownList(
+                                    ['woodenitem' => 'Wooden Item', 'glass' => 'Glass']
+                            );
+                            ?>
+
+                        </div>
+                        <div class="col-lg-3">
+                            <?= $form->field($ordermodel, 'offerprice')->textInput() ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <?= Html::submitButton('Place Order', ['class' => $ordermodel->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                    </div>
+
+            <?php ActiveForm::end(); ?>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div class="form-group field-orders-pickupdate2 ">
-        <label class="control-label" for="orders-pickupdate2">Pickup Date</label>
-        <?= DatePicker::widget([
-    'name' => 'pickupdate2', 
-    'value' => date('d-M-Y', strtotime('+4 days')),
-    'options' => ['placeholder' => 'Select issue date ...'],
-    'pluginOptions' => [
-        'format' => 'dd-M-yyyy',
-        'todayHighlight' => true
-    ]
-    ]);
-    ?>
-        
-    </div>
-    
-    
-    
-
-    <?= $form->field($ordermodel, 'pickupcond')->textInput(['maxlength' => true]) ->dropDownList(
-            ['before'=>'Before','after'=>'After','between'=>'Between']
-           
-        );
- ?>
-
-    <?= $form->field($ordermodel, 'deliverylocation')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($ordermodel, 'deliverylocationtype')->textInput(['maxlength' => true])->dropDownList(
-            ['residential'=>'Residential','office'=>'Office']
-           
-        ); ?>
-    
-    <div class="form-group field-orders-deliverydate1 required ">
-        <label class="control-label" for="orders-deliverydate1">Delivery Date</label>
-        <?= DatePicker::widget([
-    'name' => 'deliverydate1', 
-    'value' => date('d-M-Y', strtotime('+2 days')),
-    'options' => ['placeholder' => 'Select issue date ...'],
-    'pluginOptions' => [
-        'format' => 'dd-M-yyyy',
-        'todayHighlight' => true
-    ]
-    ]);
-    ?>
-        
-    </div>
-    
-    <div class="form-group field-orders-deliverydate2  ">
-        <label class="control-label" for="orders-deliverydate2">Delivery Date</label>
-        <?= DatePicker::widget([
-    'name' => 'deliverydate2', 
-    'value' => date('d-M-Y', strtotime('+2 days')),
-    'options' => ['placeholder' => 'Select issue date ...'],
-    'pluginOptions' => [
-        'format' => 'dd-M-yyyy',
-        'todayHighlight' => true
-    ]
-    ]);
-    ?>
-        
-    </div>
-
-    <?= $form->field($ordermodel, 'deliverycond')->textInput(['maxlength' => true])->dropDownList(
-            ['before'=>'Before','after'=>'After','between'=>'Between']
-           
-        ); ?>
-
-    
-
-    <!--  order info -->
-    
-    
-
-    <?= $form->field($orderinfomodel, 'width')->textInput() ?>
-
-    <?= $form->field($orderinfomodel, 'height')->textInput() ?>
-
-    <?= $form->field($orderinfomodel, 'length')->textInput() ?>
-
-    <?= $form->field($orderinfomodel, 'weight')->textInput() ?>
-
-    <?= $form->field($orderinfomodel, 'breakable')->textInput()->dropDownList(
-            ['0'=>'No','1'=>'Yes']
-           
-        ); ?>
-
-    <?= $form->field($orderinfomodel, 'wooden')->textInput()->dropDownList(
-            ['0'=>'No','1'=>'Yes']
-           
-        ); ?>
-
-    <?= $form->field($orderinfomodel, 'packed')->textInput()->dropDownList(
-            ['0'=>'No','1'=>'Yes']
-           
-        ); ?>
-
-    <?= $form->field($orderinfomodel, 'packagetype')->textInput(['maxlength' => true])->dropDownList(
-            ['woodenitem'=>'Wooden Item','glass'=>'Glass']
-           
-        ); ?>
-
-    
-    
-    
-    
-    <div class="form-group">
-        <?= Html::submitButton('Place Order',['class' => $ordermodel->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
- </div>
 </div>

@@ -221,19 +221,19 @@ class SiteController extends Controller
     public function actionPlaceOrder(){
         $ordermodel = new Orders();
         $orderinfomodel = new OrderInfo();
-        
+        //set required fields
+        $ordermodel->status = 1;
         if ($ordermodel->load(Yii::$app->request->post()) && $orderinfomodel->load(Yii::$app->request->post())) {
+           
             
-            //set required fields
-            $ordermodel->status = 1;
             if($ordermodel->save()){
                 $orderinfomodel->order_id = $ordermodel->id;
                 $orderinfomodel->save();
                return $this->render('afterorder');     
             }
-            
+           
                
-        }  
+        }
             return $this->render('orderform', [
                 'ordermodel' => $ordermodel,'orderinfomodel'=>$orderinfomodel
             ]);
