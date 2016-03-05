@@ -12,6 +12,7 @@ $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-contact">
+    <div class="container">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
@@ -41,5 +42,5 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php ActiveForm::end(); ?>
         </div>
     </div>
-
+    </div>
 </div>

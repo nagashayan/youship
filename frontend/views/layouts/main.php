@@ -55,10 +55,10 @@ AppAsset::register($this);
 
                 <nav class="nav-menu">
                     <ul class="menu-list">
-                        <li><a class="active" href="index.html">Home</a></li>
+                        <li><a class="active" href="index">Home</a></li>
                         <?php if (Yii::$app->user->isGuest) { ?>
 
-                        <li><a class="mobile-auth" href="<?= FRONTENDURL; ?>/signin">Sign In</a></li>
+                            <li><a class="mobile-auth" href="<?= FRONTENDURL; ?>/signin">Sign In</a></li>
                             <li><a class="mobile-auth" href="<?= FRONTENDURL; ?>/register">Register</a></li>
 
                         <?php } else { ?>
@@ -68,20 +68,8 @@ AppAsset::register($this);
                         <?php }
                         ?>
 
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="gallery.html">Gallery</a></li>
-                        <li class="drop"><a href="services.html">Our Services</a>
-                            <ul class="dropdown">
-                                <li><a href="transportation.html">Transportation</a></li>
-                                <li><a href="packing.html">Packing</a></li>
-                                <li><a href="removals.html">Removals</a></li>
-                                <li><a href="collecting.html">Collecting</a></li>
-                                <li><a href="preaparing.html">Preapring</a></li>
-                                <li><a href="delivery.html">Delivery</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="blog.html">News</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="<?= DOMAINURL?>/site/about">About</a></li>
+                        <li><a href="<?= DOMAINURL?>/site/contact">Contact</a></li>
                     </ul>
                 </nav>
 
@@ -144,7 +132,7 @@ AppAsset::register($this);
                                             <img src="<?= FRONTENDURL; ?>/images/footer-logo.png" alt="">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                   <!-- <div class="col-md-4">
                                         <div class="footer-widget">
                                             <h2>Flickr widget</h2>
                                             <ul class="flickr">
@@ -156,8 +144,8 @@ AppAsset::register($this);
                                                 <li><a href="#"><img src="<?= FRONTENDURL; ?>/upload/flickr/8.jpg" alt=""></a></li>
                                             </ul>
                                         </div>
-                                    </div>
-                                    <div class="col-md-4">
+                                    </div> -->
+                                    <div class="col-md-4 pull-right">
                                         <div class="footer-widget info-widget">
                                             <h2>Info</h2>
                                             <p class="first-par">You can contact or visit us during working time.</p>
