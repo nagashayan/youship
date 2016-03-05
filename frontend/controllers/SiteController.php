@@ -12,6 +12,9 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use common\models\Orders;
+use common\models\OrderInfo;
+use yii\data\ActiveDataProvider;
 
 /**
  * Site controller
@@ -216,8 +219,8 @@ class SiteController extends Controller
      * creating new order by customer
      */
     public function actionPlaceOrder(){
-        $ordermodel = new \common\models\Orders();
-        $orderinfomodel = new \common\models\OrderInfo();
+        $ordermodel = new Orders();
+        $orderinfomodel = new OrderInfo();
         
         if ($ordermodel->load(Yii::$app->request->post()) && $orderinfomodel->load(Yii::$app->request->post())) {
             
@@ -226,19 +229,14 @@ class SiteController extends Controller
             if($ordermodel->save()){
                 $orderinfomodel->order_id = $ordermodel->id;
                 $orderinfomodel->save();
-                    
+               return $this->render('afterorder');     
             }
-            else{
-                print_r($orderinfomodel->getErrors());
-                print_r($ordermodel->getErrors());
-                 
-            }
-            return $this->render('afterorder');
             
-        } else { 
+               
+        }  
             return $this->render('orderform', [
                 'ordermodel' => $ordermodel,'orderinfomodel'=>$orderinfomodel
             ]);
-        }
+        
     }
 }

@@ -11,8 +11,14 @@ use kartik\date\DatePicker;
 ?>
 
 <div class="orders-form">
-
-    <?php $form = ActiveForm::begin(); ?>
+ <div class="container">
+     <h3>Place your order</h3>
+    <?php $form = ActiveForm::begin([
+       'id' => 'order-form',
+         'enableClientValidation' => true,
+         'enableAjaxValidation' => true,
+         
+    ]); ?>
 
     <?= $form->field($ordermodel, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -29,9 +35,10 @@ use kartik\date\DatePicker;
         ); ?>
     
     <div class="form-group field-orders-pickupdate1 required ">
-        <label class="control-label" for="orders-pickuplocationtype">Pickup Date</label>
+        <label class="control-label" for="orders-pickupdate1">Pickup Date</label>
         <?= DatePicker::widget([
     'name' => 'pickupdate1', 
+            'id'=>'datepicker1',
     'value' => date('d-M-Y', strtotime('+2 days')),
     'options' => ['placeholder' => 'Select issue date ...'],
     'pluginOptions' => [
@@ -47,7 +54,7 @@ use kartik\date\DatePicker;
         <label class="control-label" for="orders-pickupdate2">Pickup Date</label>
         <?= DatePicker::widget([
     'name' => 'pickupdate2', 
-    'value' => date('d-M-Y', strtotime('+2 days')),
+    'value' => date('d-M-Y', strtotime('+4 days')),
     'options' => ['placeholder' => 'Select issue date ...'],
     'pluginOptions' => [
         'format' => 'dd-M-yyyy',
@@ -75,7 +82,7 @@ use kartik\date\DatePicker;
         ); ?>
     
     <div class="form-group field-orders-deliverydate1 required ">
-        <label class="control-label" for="orders-deliverydate2">Delivery Date</label>
+        <label class="control-label" for="orders-deliverydate1">Delivery Date</label>
         <?= DatePicker::widget([
     'name' => 'deliverydate1', 
     'value' => date('d-M-Y', strtotime('+2 days')),
@@ -152,5 +159,5 @@ use kartik\date\DatePicker;
     </div>
 
     <?php ActiveForm::end(); ?>
-
+ </div>
 </div>

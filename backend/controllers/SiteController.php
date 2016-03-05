@@ -26,7 +26,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index','view-complete-order','update-quote-log'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -55,7 +55,8 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $orderfeed = \common\models\Orders::find()->where('status = 1')->orderBy('updatedon desc')->all();
+        return $this->render('index',['orderfeed'=>$orderfeed]);
     }
 
     public function actionLogin()
@@ -79,5 +80,33 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+    
+    public function actionViewCompleteOrder($id){
+        echo $id;
+        
+        $order = \common\models\Orders::find()->where("id = $id")->one();
+        $orderinfo = \common\models\OrderInfo::find()->where("order_id = $id")->one();
+        
+        //get all quote info from quote log table
+        $quotelog = \common\models\Quotelog::find()->where("order_id = $id")->all();
+        return $this->render('vieworder',['order'=>$order,'orderinfo'=>$orderinfo,
+            'quotelog'=>$quotelog]);
+        
+    }
+    
+    /**
+     * create new record in quote log to store all quotes
+     * 
+     */
+    
+    public function actionUpdateQuoteLog(){
+        $model = new \common\models\Quotelog();
+       // print_r($model->load(Yii::$app->request->post())); print_r($model); die();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view-complete-order', 'id' => $model->order_id]);
+        } else {
+            print_r($model->getErrors());
+        }
     }
 }

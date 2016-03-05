@@ -42,7 +42,7 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'status', 'pickuplocation', 'pickuplocationtype', 'pickupcond', 'deliverylocation', 'deliverylocationtype', 'deliverycond'], 'required'],
+            [['title', 'status', 'pickuplocation', 'pickuplocationtype', 'pickupcond', 'pickupdate1','deliverydate1','deliverylocation', 'deliverylocationtype', 'deliverycond'], 'required'],
             [['status'], 'integer'],
             [['offerprice'], 'number'],
             [['pickupdate1', 'pickupdate2', 'deliverydate1', 'deliverydate2', 'createdon', 'updatedon'], 'safe'],

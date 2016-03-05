@@ -48,7 +48,7 @@ AppAsset::register($this);
                 ================================================== -->
             <header class="clearfix">
                 <div class="logo">
-                    <a href="index.html"><img src="<?= FRONTENDURL; ?>/images/logo.png" alt=""></a>
+                    <a href="<?= FRONTENDURL; ?>"><img src="<?= FRONTENDURL; ?>/images/logo.png" alt=""></a>
                 </div>
 
                 <a class="elemadded responsive-link" href="#">Menu</a>
@@ -183,7 +183,7 @@ AppAsset::register($this);
     <?php $this->endBody() ?>
     <!-- End Container -->
 
-    <script type="text/javascript" src="<?= FRONTENDURL; ?>/js/jquery.min.js"></script>
+    
     <script type="text/javascript" src="<?= FRONTENDURL; ?>/js/jquery.migrate.js"></script>
     <script type="text/javascript" src="<?= FRONTENDURL; ?>/js/jquery.bxslider.min.js"></script>
     <script type="text/javascript" src="<?= FRONTENDURL; ?>/js/bootstrap.min.js"></script>
