@@ -18,24 +18,22 @@ use kartik\date\DatePicker;
                 <div class="order-info-form">
                     <?php
                     $form = ActiveForm::begin([
-                                'id' => 'order-form',
-                                'enableClientValidation' => true,
-                                'enableAjaxValidation' => true,
+                              
                     ]);
                     ?>
                     <div class="row">
                         <div class="col-lg-9"> 
                             <?= $form->field($ordermodel, 'title')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($ordermodel, 'description')->textArea(['maxlength' => true]) ?>
+                            <?= $form->field($ordermodel, 'description')->textArea(['maxlength' => true]) ?>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-3">
-
-
-<?= $form->field($ordermodel, 'pickuplocation')->textInput(['maxlength' => true]) ?>
+                       
+                        <div class="col-lg-3 gps-img-parent">
+                            <?= $form->field($ordermodel, 'pickuplocation')->textInput(['maxlength' => true]);?>
+                            <img class="gps-symbol" onclick="getLocation('#orders-pickuplocation')" src="<?=DOMAINURL;?>/images/gps.png"/>
                         </div>
                         <div class="col-lg-3">
                             <?=
@@ -88,15 +86,16 @@ use kartik\date\DatePicker;
                   ?>
                     -->
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-3 gps-img-parent">
                             <?= $form->field($ordermodel, 'deliverylocation')->textInput(['maxlength' => true]) ?>
+                            <img class="gps-symbol" onclick="getLocation('#orders-deliverylocation')" src="<?=DOMAINURL;?>/images/gps.png"/>
                         </div>
                         <div class="col-lg-3">
-<?=
-$form->field($ordermodel, 'deliverylocationtype')->textInput(['maxlength' => true])->dropDownList(
-        ['residential' => 'Residential', 'office' => 'Office']
-);
-?>
+                            <?=
+                            $form->field($ordermodel, 'deliverylocationtype')->textInput(['maxlength' => true])->dropDownList(
+                                    ['residential' => 'Residential', 'office' => 'Office']
+                            );
+                            ?>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group field-orders-deliverydate1 required ">
@@ -146,10 +145,10 @@ $form->field($ordermodel, 'deliverylocationtype')->textInput(['maxlength' => tru
                             <?= $form->field($orderinfomodel, 'width')->textInput() ?>
                         </div>
                         <div class="col-lg-3">
-<?= $form->field($orderinfomodel, 'height')->textInput() ?>
-                        </div>
-                        <div class="col-lg-3">
-<?= $form->field($orderinfomodel, 'length')->textInput() ?>
+                            <?= $form->field($orderinfomodel, 'height')->textInput() ?>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                            <?= $form->field($orderinfomodel, 'length')->textInput() ?>
                         </div>
                     </div>
                     <div class="row">
@@ -202,3 +201,56 @@ $form->field($ordermodel, 'deliverylocationtype')->textInput(['maxlength' => tru
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var locid = "";
+   window.onload = function() {
+   $("#pickupcurrentloc").change(function(){
+     console.log("changed");
+     if($('#pickupcurrentloc').is(":checked")){
+         console.log("checked");
+     }
+     else{
+         console.log("unchecked");
+     }
+   });
+   
+
+
+
+}; 
+function getLocation(id) {
+    locid = id;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(getReverseGeocodingData);
+    } else {
+        $(locid).val( "Geolocation is not supported by this browser.");
+    }
+}
+function showPosition(address) {
+    
+    $(locid).val(address);
+    
+}
+function getReverseGeocodingData(position) {
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+    
+    var latlng = new google.maps.LatLng(lat, lng);
+    // This is making the Geocode request
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+        if (status !== google.maps.GeocoderStatus.OK) {
+            console.log(status);
+        }
+        // This is checking to see if the Geoeode Status is OK before proceeding
+        if (status == google.maps.GeocoderStatus.OK) {
+            console.log(results);
+            var address = (results[0].formatted_address);
+            console.log(address);
+            showPosition(address);
+        }
+    });
+}
+  
+    </script>
