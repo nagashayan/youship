@@ -47,6 +47,7 @@ class SiteController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
+                    'delete' => ['post'],
                 ],
             ],
         ];
@@ -241,5 +242,57 @@ class SiteController extends Controller
                 'ordermodel' => $ordermodel,'orderinfomodel'=>$orderinfomodel
             ]);
         
+    }
+    
+    /**
+     * see all your orders
+     */
+    public function actionViewOrder($id = null){
+        if($id){
+            $error = null;
+            echo 'showing order id'.$id;
+            $model = Orders::find()->where("id = $id")->one();
+            if(isset($model->id)){
+                $model1 = OrderInfo::find()->where("order_id = $model->id")->one();
+            }
+            if($model ==  "")
+                $error = "Invalid Order Id!";
+            else if($model->userid != Yii::$app->user->id)
+                $error = "Access is denied";
+            
+            return $this->render('vieworder', [
+                'model' => $model,'model1'=>$model1,'error'=>$error
+            ]);
+        }
+        else{
+            echo 'showing all'.Yii::$app->user->id;
+            //get all orders by current user
+            $model = Orders::find()->where("userid = ".Yii::$app->user->id)->orderBy('updatedon')->all();
+            return $this->render('vieworders', [
+                'model' => $model
+            ]);
+        }
+    }
+    
+    /**
+     * for deleting the order
+     */
+    public function actionDeleteorder($id){
+        $error = null;
+        $model = Orders::find()->where("id = $id")->one();
+            if(isset($model->id)){
+                $model1 = OrderInfo::find()->where("order_id = $model->id")->one();
+            }
+            if($model ==  "")
+                $error = "Invalid Order Id!";
+            else if($model->userid != Yii::$app->user->id)
+                $error = "Access is denied";
+            else{
+                //delete it 
+                $model1->delete();
+                $model->delete();
+                
+            }
+            $this->goBack();            
     }
 }

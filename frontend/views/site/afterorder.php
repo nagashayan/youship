@@ -11,7 +11,7 @@ $this->title = 'Order placed';
 
         <p class="lead">You have successfully placed your order.</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://localhost/youship/frontend/web/site/place-order">Place a Quote</a></p>
+        <p><a class="btn btn-lg btn-success" href="http://localhost/youship/frontend/web/site/view-order">View your Quotes</a></p>
     </div>
 
     <div class="body-content">

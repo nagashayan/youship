@@ -12,6 +12,7 @@ use Yii;
  * @property string $title
  * @property string $description
  * @property integer $status
+ * @property integer $userid
  * @property double $offerprice
  * @property string $pickuplocation
  * @property string $pickuplocationtype
@@ -25,6 +26,9 @@ use Yii;
  * @property string $deliverycond
  * @property string $createdon
  * @property string $updatedon
+ *
+ * @property OrderInfo[] $orderInfos
+ * @property User $user
  */
 class Orders extends \yii\db\ActiveRecord
 {
@@ -42,8 +46,8 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'status', 'pickuplocation', 'pickuplocationtype', 'pickupcond', 'pickupdate1','deliverydate1','deliverylocation', 'deliverylocationtype', 'deliverycond'], 'required'],
-            [['status'], 'integer'],
+            [['title', 'status', 'userid', 'pickuplocation', 'pickuplocationtype', 'pickupcond', 'deliverylocation', 'deliverylocationtype', 'deliverycond'], 'required'],
+            [['status', 'userid'], 'integer'],
             [['offerprice'], 'number'],
             [['pickupdate1', 'pickupdate2', 'deliverydate1', 'deliverydate2', 'createdon', 'updatedon'], 'safe'],
             [['title'], 'string', 'max' => 500],
@@ -63,6 +67,7 @@ class Orders extends \yii\db\ActiveRecord
             'title' => 'Title',
             'description' => 'Description',
             'status' => 'Status',
+            'userid' => 'Userid',
             'offerprice' => 'Offerprice',
             'pickuplocation' => 'Pickuplocation',
             'pickuplocationtype' => 'Pickuplocationtype',
@@ -78,12 +83,25 @@ class Orders extends \yii\db\ActiveRecord
             'updatedon' => 'Updatedon',
         ];
     }
-    
-    
 
-    public function behaviors()
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrderInfos()
     {
-        return [
+        return $this->hasMany(OrderInfo::className(), ['order_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'userid']);
+    }
+    
+    public function behaviors(){
+      return [
             [
                 'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'createdon',
@@ -91,5 +109,5 @@ class Orders extends \yii\db\ActiveRecord
                 'value' => new Expression('NOW()'),
             ],
         ];
-    }
+      }
 }
