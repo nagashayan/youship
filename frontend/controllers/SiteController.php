@@ -224,8 +224,11 @@ class SiteController extends Controller
         //set required fields
         $ordermodel->status = 1;
         if ($ordermodel->load(Yii::$app->request->post()) && $orderinfomodel->load(Yii::$app->request->post())) {
+           $ordermodel->pickupcond = "on";
+           $ordermodel->deliverycond = "on";
+           $ordermodel->pickupdate1 = Yii::$app->request->post('pickupdate1');
+           $ordermodel->deliverydate1 = Yii::$app->request->post('deliverydate1');
            
-            
             if($ordermodel->save()){
                 $orderinfomodel->order_id = $ordermodel->id;
                 $orderinfomodel->save();
