@@ -9,5 +9,6 @@
 define('DOMAINURL','http://localhost/youship/frontend/web');
 define('FRONTENDURL','http://localhost/youship/frontend/web');
 define('BACKENDURL','http://localhost/youship/backend/web');
+define('ACCESSDENIED','Access denied please login to access this page');
 
 

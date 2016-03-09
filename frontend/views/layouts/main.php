@@ -64,12 +64,14 @@ AppAsset::register($this);
                         <?php } else { ?>
 
                             <li><a class="mobile-auth" href="<?= FRONTENDURL; ?>/logout" data-method="post"><?= 'Logout (' . Yii::$app->user->identity->username . ')'; ?></a></li>             
+                            <li><a href="<?= DOMAINURL?>/site/view-order">View Orders</a></li>
 
                         <?php }
                         ?>
 
                         <li><a href="<?= DOMAINURL?>/site/about">About</a></li>
                         <li><a href="<?= DOMAINURL?>/site/contact">Contact</a></li>
+                        
                     </ul>
                 </nav>
 

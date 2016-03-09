@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\controllers;
 
 use Yii;
@@ -19,13 +20,12 @@ use yii\data\ActiveDataProvider;
 /**
  * Site controller
  */
-class SiteController extends Controller
-{
+class SiteController extends Controller {
+
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -56,8 +56,7 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -74,8 +73,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         return $this->render('index');
     }
 
@@ -84,8 +82,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionLogin()
-    {
+    public function actionLogin() {
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -95,7 +92,7 @@ class SiteController extends Controller
             return $this->goBack();
         } else {
             return $this->render('login', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -105,8 +102,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionLogout()
-    {
+    public function actionLogout() {
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -117,8 +113,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionContact()
-    {
+    public function actionContact() {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
@@ -130,7 +125,7 @@ class SiteController extends Controller
             return $this->refresh();
         } else {
             return $this->render('contact', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -140,8 +135,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionAbout()
-    {
+    public function actionAbout() {
         return $this->render('about');
     }
 
@@ -150,8 +144,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionSignup()
-    {
+    public function actionSignup() {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
@@ -162,7 +155,7 @@ class SiteController extends Controller
         }
 
         return $this->render('signup', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -171,8 +164,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset()
-    {
+    public function actionRequestPasswordReset() {
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
@@ -185,7 +177,7 @@ class SiteController extends Controller
         }
 
         return $this->render('requestPasswordResetToken', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
 
@@ -196,8 +188,7 @@ class SiteController extends Controller
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
-    {
+    public function actionResetPassword($token) {
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
@@ -211,88 +202,127 @@ class SiteController extends Controller
         }
 
         return $this->render('resetPassword', [
-            'model' => $model,
+                    'model' => $model,
         ]);
     }
-    
+
     /**
      * 
      * creating new order by customer
      */
-    public function actionPlaceOrder(){
-        $ordermodel = new Orders();
-        $orderinfomodel = new OrderInfo();
-        //set required fields
-        $ordermodel->status = 1;
-        if ($ordermodel->load(Yii::$app->request->post()) && $orderinfomodel->load(Yii::$app->request->post())) {
-           $ordermodel->pickupcond = "on";
-           $ordermodel->deliverycond = "on";
-           $ordermodel->pickupdate1 = Yii::$app->request->post('pickupdate1');
-           $ordermodel->deliverydate1 = Yii::$app->request->post('deliverydate1');
-           
-            if($ordermodel->save()){
-                $orderinfomodel->order_id = $ordermodel->id;
-                $orderinfomodel->save();
-               return $this->render('afterorder');     
+    public function actionPlaceOrder() {
+        if (!Yii::$app->user->isGuest) {
+            $ordermodel = new Orders();
+            $orderinfomodel = new OrderInfo();
+            //set required fields
+            $ordermodel->status = 1;
+
+            $ordermodel->userid = Yii::$app->user->id;
+            if ($ordermodel->load(Yii::$app->request->post()) && $orderinfomodel->load(Yii::$app->request->post())) {
+                $ordermodel->pickupcond = "on";
+                $ordermodel->deliverycond = "on";
+                $ordermodel->pickupdate1 = Yii::$app->request->post('pickupdate1');
+                $ordermodel->deliverydate1 = Yii::$app->request->post('deliverydate1');
+
+                if ($ordermodel->save()) {
+                    $orderinfomodel->order_id = $ordermodel->id;
+                    $orderinfomodel->save();
+                    return $this->render('afterorder');
+                }
+                print_r($ordermodel->getErrors());
+                print_r($orderinfomodel->getErrors());
             }
-           
-               
-        }
             return $this->render('orderform', [
-                'ordermodel' => $ordermodel,'orderinfomodel'=>$orderinfomodel
+                        'ordermodel' => $ordermodel, 'orderinfomodel' => $orderinfomodel
             ]);
-        
+        } else {
+            return $this->render('error', [
+                        'errormsg' => ACCESSDENIED
+            ]);
+        }
     }
-    
+
+    /**
+     * 
+     * update new order by customer
+     */
+    public function actionUpdateOrder($id) {
+        if (!Yii::$app->user->isGuest) {
+            $ordermodel = Orders::find()->where("id = $id")->one();
+
+            if (isset($ordermodel->id)) { 
+                $orderinfomodel = OrderInfo::find()->where("order_id = $ordermodel->id")->one();
+
+                if (isset($orderinfomodel->id)) {
+                    
+                    if ($ordermodel->load(Yii::$app->request->post()) && $orderinfomodel->load(Yii::$app->request->post())
+                            && $ordermodel->save() && $orderinfomodel->save()) {
+                            return $this->render('afterorder');
+                    }
+                    else{
+                        print_r($ordermodel->getErrors());
+                        print_r($orderinfomodel->getErrors());
+                    }
+                    return $this->render('orderform', [
+                                'ordermodel' => $ordermodel, 'orderinfomodel' => $orderinfomodel
+                    ]);
+                }
+            }
+        }
+        return $this->render('error', [ 'name'=>'Error',
+                    'message' => ACCESSDENIED
+        ]);
+    }
+
     /**
      * see all your orders
      */
-    public function actionViewOrder($id = null){
-        if($id){
+    public function actionViewOrder($id = null) {
+        if ($id) {
             $error = null;
-            echo 'showing order id'.$id;
+            echo 'showing order id' . $id;
             $model = Orders::find()->where("id = $id")->one();
-            if(isset($model->id)){
+            if (isset($model->id)) {
                 $model1 = OrderInfo::find()->where("order_id = $model->id")->one();
             }
-            if($model ==  "")
+            if ($model == "")
                 $error = "Invalid Order Id!";
-            else if($model->userid != Yii::$app->user->id)
+            else if ($model->userid != Yii::$app->user->id)
                 $error = "Access is denied";
-            
+
             return $this->render('vieworder', [
-                'model' => $model,'model1'=>$model1,'error'=>$error
+                        'model' => $model, 'model1' => $model1, 'error' => $error
             ]);
         }
-        else{
-            echo 'showing all'.Yii::$app->user->id;
+        else {
+            echo 'showing all' . Yii::$app->user->id;
             //get all orders by current user
-            $model = Orders::find()->where("userid = ".Yii::$app->user->id)->orderBy('updatedon')->all();
+            $model = Orders::find()->where("userid = " . Yii::$app->user->id)->orderBy('updatedon')->all();
             return $this->render('vieworders', [
-                'model' => $model
+                        'model' => $model
             ]);
         }
     }
-    
+
     /**
      * for deleting the order
      */
-    public function actionDeleteorder($id){
+    public function actionDeleteorder($id) {
         $error = null;
         $model = Orders::find()->where("id = $id")->one();
-            if(isset($model->id)){
-                $model1 = OrderInfo::find()->where("order_id = $model->id")->one();
-            }
-            if($model ==  "")
-                $error = "Invalid Order Id!";
-            else if($model->userid != Yii::$app->user->id)
-                $error = "Access is denied";
-            else{
-                //delete it 
-                $model1->delete();
-                $model->delete();
-                
-            }
-            $this->goBack();            
+        if (isset($model->id)) {
+            $model1 = OrderInfo::find()->where("order_id = $model->id")->one();
+        }
+        if ($model == "")
+            $error = "Invalid Order Id!";
+        else if ($model->userid != Yii::$app->user->id)
+            $error = "Access is denied";
+        else {
+            //delete it 
+            $model1->delete();
+            $model->delete();
+        }
+        $this->goBack();
     }
+
 }

@@ -26,6 +26,7 @@ $this->title = 'Order placed';
     <?php foreach($model as $order){ ?>
         <tr><td><?= $order->updatedon;?></td>
             <td><a href="<?= DOMAINURL?>/site/view-order?id=<?= $order->id;?>"><i class="fa fa-eye"></i></a></td>
+            <td><a href="<?= DOMAINURL?>/site/update-order?id=<?= $order->id;?>"><i class="fa fa-pencil"></i></a></td>
         <td><a href="<?= DOMAINURL?>/site/deleteorder/<?= $order->id;?>" title="Delete" aria-label="Delete"
                data-confirm="Are you sure you want to delete this item?" data-method="post" data-pjax="0">
                 <i class="fa fa-trash-o"></i>
