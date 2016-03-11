@@ -48,6 +48,7 @@ class SiteController extends Controller {
                 'actions' => [
                     'logout' => ['post'],
                     'delete' => ['post'],
+                    'update-customer-quote'=>['post'],
                 ],
             ],
         ];
@@ -278,20 +279,27 @@ class SiteController extends Controller {
      * see all your orders
      */
     public function actionViewOrder($id = null) {
+       
         if ($id) {
-            $error = null;
-            echo 'showing order id' . $id;
+           
+            
             $model = Orders::find()->where("id = $id")->one();
+            
             if (isset($model->id)) {
                 $model1 = OrderInfo::find()->where("order_id = $model->id")->one();
             }
-            if ($model == "")
-                $error = "Invalid Order Id!";
-            else if ($model->userid != Yii::$app->user->id)
-                $error = "Access is denied";
+            
+            if ($model == "" || $model->userid != Yii::$app->user->id){
+                 $message = ACCESSDENIED;
+                 return $this->render('error', [
+                        'name' => 'Error', 'message'=>$message
+            ]);
+            }
+               
+          
 
             return $this->render('vieworder', [
-                        'model' => $model, 'model1' => $model1, 'error' => $error
+                        'model' => $model, 'model1' => $model1,
             ]);
         }
         else {
@@ -323,6 +331,27 @@ class SiteController extends Controller {
             $model->delete();
         }
         $this->goBack();
+    }
+    
+    /**
+     * update customer quote
+     */
+    public function actionUpdateCustomerQuote(){ 
+    print_r(Yii::$app->request->post());
+        if(Yii::$app->request->post('id') != "" && Yii::$app->request->post('offerprice') != ""){ echo 'in';
+            $id = Yii::$app->request->post('id');
+            $offer_price = Yii::$app->request->post('offerprice');
+            $model = Orders::find()->where("id = $id")->one();
+            if ($model != "" && $model->userid == Yii::$app->user->id){
+               $quotemodel =  new \common\models\Quotelog();
+               $quotemodel->order_id = $model->id;
+               $quotemodel->offer_price = $offer_price;
+               $quotemodel->quote_from = "customer";
+               
+               $quotemodel->save();
+               print_r($quotemodel->getErrors());
+            }
+        }
     }
 
 }

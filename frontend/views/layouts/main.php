@@ -188,6 +188,9 @@ AppAsset::register($this);
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
     <script type="text/javascript" src="<?= FRONTENDURL; ?>/js/gmap3.min.js"></script>
     <script type="text/javascript" src="<?= FRONTENDURL; ?>/js/script.js"></script>
+    
+    <!-- OUR CUSTOM SITE SCRIPT -->
+    <script type="text/javascript" src="<?= FRONTENDURL; ?>/js/custom.js"></script>
 
     <!-- Revolution slider -->
     <script type="text/javascript">

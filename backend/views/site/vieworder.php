@@ -112,7 +112,7 @@ $this->title = 'Lorry App';
         <?php } ?>
     </div>
     <?php } 
-    else { echo 'here';?>
+    else { //echo 'here';?>
     <!-- <div class="row">
         
          <form action="<?= BACKENDURL ?>/site/update-quote-log" method="post">

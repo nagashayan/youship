@@ -192,7 +192,7 @@ use kartik\date\DatePicker;
                     </div>
 
                     <div class="form-group">
-                        <?= Html::submitButton('Place Order', ['class' => $ordermodel->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= Html::submitButton($ordermodel->isNewRecord ? 'Place Order' : 'Update Order', ['class' => $ordermodel->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
                     </div>
 
             <?php ActiveForm::end(); ?>

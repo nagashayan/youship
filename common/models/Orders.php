@@ -110,4 +110,53 @@ class Orders extends \yii\db\ActiveRecord
             ],
         ];
       }
+      
+      /**
+       * returns last quote by customer
+       */
+      public function getLastCustomerQuote($id){
+          //get last quote for custom from quote log
+          $quotelog = Quotelog::find()->where("order_id = $id and quote_from = 'customer'")->orderBy("quoted_date")->one();
+          if(isset($quotelog->id)){
+             return $quotelog->offer_price; 
+          }
+          else{
+              //if quote log is empty
+              return false;
+          }
+      }
+      
+      /**
+       * returns last quote by operator
+       */
+      public function getLastOperatorQuote($id){
+          //get last quote for custom from quote log
+          $quotelog = Quotelog::find()->where("order_id = $id and quote_from = 'operator'")->orderBy("quoted_date")->one();
+          if(isset($quotelog->id)){
+             return $quotelog->offer_price; 
+          }
+          else{
+              //if quote log is empty
+              return false;
+          }
+      }
+      
+      /**
+       * get customer quote status
+       * return false if last quote is customer or bidding is closed
+       */
+      public function getCustomerQuoteStatus($order){
+          $id = $order->id;
+          $quote = Quotelog::find()->where("order_id = $id")->orderBy("id desc")->one();
+          if(isset($quote->id)){
+              if($quote->quote_from == "operator" && Quotelog::find()->where("order_id = $id")->orderBy("id desc")->count() < 4){
+                  return true;
+              }
+              
+          }
+          
+          return false;
+          
+          
+      }
 }

@@ -1,7 +1,8 @@
 <?php
 
 namespace common\models;
-
+use yii\db\Expression;
+use yii\behaviors\TimestampBehavior;
 use Yii;
 
 /**
@@ -12,6 +13,8 @@ use Yii;
  * @property double $offer_price
  * @property string $quote_from
  * @property string $quoted_date
+ *
+ * @property Orders $order
  */
 class Quotelog extends \yii\db\ActiveRecord
 {
@@ -49,5 +52,25 @@ class Quotelog extends \yii\db\ActiveRecord
             'quote_from' => 'Quote From',
             'quoted_date' => 'Quoted Date',
         ];
+    }
+    
+    
+    public function behaviors(){
+      return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'quoted_date',
+                'updatedAtAttribute' => 'quoted_date',
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+      }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrder()
+    {
+        return $this->hasOne(Orders::className(), ['id' => 'order_id']);
     }
 }
