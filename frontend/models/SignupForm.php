@@ -13,6 +13,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $operator;
 
     /**
      * @inheritdoc
@@ -33,6 +34,8 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+            ['operator','required'],
+            ['operator','number']
         ];
     }
 
@@ -49,6 +52,8 @@ class SignupForm extends Model
             $user->email = $this->email;
             $user->setPassword($this->password);
             $user->generateAuthKey();
+            $user->operator = $this->operator;
+            
             if ($user->save()) {
                 return $user;
             }

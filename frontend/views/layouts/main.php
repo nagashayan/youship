@@ -63,7 +63,7 @@ AppAsset::register($this);
 
                         <?php } else { ?>
 
-                            <li><a class="mobile-auth" href="<?= FRONTENDURL; ?>/logout" data-method="post"><?= 'Logout (' . Yii::$app->user->identity->username . ')'; ?></a></li>             
+                            <li><a class="mobile-auth" href="<?= FRONTENDURL; ?>/logout" data-method="post"><?= 'Logout'; ?></a></li>             
                             <li><a href="<?= DOMAINURL?>/site/view-order">View Orders</a></li>
 
                         <?php }
@@ -108,7 +108,7 @@ AppAsset::register($this);
 
                                         <?php } else { ?>               
 
-                                            <li><a class="signin" href="<?= FRONTENDURL; ?>/logout" data-method="post"><?= 'Logout (' . Yii::$app->user->identity->username . ')'; ?></a></li>
+                                            <li><a class="signin" href="<?= FRONTENDURL; ?>/logout" data-method="post"><?= 'Logout'; ?></a></li>
                                         <?php }
                                         ?>
 

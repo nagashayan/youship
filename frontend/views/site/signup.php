@@ -25,6 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
+            
+                <?= $form->field($model, 'operator')->dropDownList(
+                                    [ 0 => 'No',1 => 'Yes']
+                            )->label('Am a operator (do you own a transport company?)'); ?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>

@@ -26,7 +26,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','view-complete-order','update-quote-log'],
+                        'actions' => ['logout', 'index','view-complete-order','update-quote-log','profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -108,5 +108,16 @@ class SiteController extends Controller
         } else {
             print_r($model->getErrors());
         }
+    }
+    
+    public function actionProfile(){
+        
+        $model = new \common\models\User();
+        $id = 
+        $user = \common\models\User::find()->where("id = $id")->one();
+        $profile = \common\models\Profile::find()->where("user_id = $user->id")->one();
+        
+        
+        
     }
 }
