@@ -12,6 +12,7 @@ use Yii;
  * @property integer $order_id
  * @property double $offer_price
  * @property string $quote_from
+ * @property integer $operator_id
  * @property string $quoted_date
  *
  * @property Orders $order
@@ -33,7 +34,7 @@ class Quotelog extends \yii\db\ActiveRecord
     {
         return [
             [['order_id', 'offer_price', 'quote_from'], 'required'],
-            [['order_id'], 'integer'],
+            [['order_id', 'operator_id'], 'integer'],
             [['offer_price'], 'number'],
             [['quoted_date'], 'safe'],
             [['quote_from'], 'string', 'max' => 20]
@@ -50,10 +51,11 @@ class Quotelog extends \yii\db\ActiveRecord
             'order_id' => 'Order ID',
             'offer_price' => 'Offer Price',
             'quote_from' => 'Quote From',
+            'operator_id' => 'Operator ID',
             'quoted_date' => 'Quoted Date',
         ];
     }
-    
+
     
     public function behaviors(){
       return [

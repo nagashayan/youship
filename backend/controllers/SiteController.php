@@ -26,7 +26,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','view-complete-order','update-quote-log','profile'],
+                        'actions' => ['logout', 'index','view-complete-order','update-quote-log','profile','operator-decision'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -55,7 +55,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $orderfeed = \common\models\Orders::find()->where('status = 1')->orderBy('updatedon desc')->all();
+        $orderfeed = \common\models\Orders::find()->where("status != '".STATUS_DISABLE."'")->orderBy('updatedon desc')->all();
         return $this->render('index',['orderfeed'=>$orderfeed]);
     }
 
@@ -84,14 +84,19 @@ class SiteController extends Controller
     
     public function actionViewCompleteOrder($id){
         echo $id;
-        
+        $user = null;
         $order = \common\models\Orders::find()->where("id = $id")->one();
+        
+        if($order->status == STATUS_ACCEPT){ 
+            //fetch user information
+            $user = \common\models\Profile::find()->where("user_id = $order->userid")->one();
+        }
         $orderinfo = \common\models\OrderInfo::find()->where("order_id = $id")->one();
         
         //get all quote info from quote log table
         $quotelog = \common\models\Quotelog::find()->where("order_id = $id")->all();
         return $this->render('vieworder',['order'=>$order,'orderinfo'=>$orderinfo,
-            'quotelog'=>$quotelog]);
+            'quotelog'=>$quotelog,'user'=>$user]);
         
     }
     
@@ -118,6 +123,37 @@ class SiteController extends Controller
         $profile = \common\models\Profile::find()->where("user_id = $user->id")->one();
         
         
+        
+    }
+    
+    /**
+     * whether operator accepts or rejects decision will be save here
+     */
+    public function actionOperatorDecision(){
+        
+        if(Yii::$app->request->post('order_id') != ""){
+         
+        $id = Yii::$app->request->post('order_id');    
+        $accept = true;
+        $reject = false;
+        if(Yii::$app->request->post('reject') != ""){
+            $accept = false;
+            $reject = true;
+        }
+        $order = \common\models\Orders::find()->where("id = $id")->one();
+        //get all quote info from quote log table
+        
+        if($accept){
+            $order->status = STATUS_ACCEPT;
+        }
+        else{
+            $order->status = STATUS_REJECT;
+        }
+        $order->save();
+        
+        
+        return $this->goBack();
+        }
         
     }
 }
