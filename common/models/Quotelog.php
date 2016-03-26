@@ -1,8 +1,7 @@
 <?php
 
 namespace common\models;
-use yii\db\Expression;
-use yii\behaviors\TimestampBehavior;
+
 use Yii;
 
 /**
@@ -55,18 +54,6 @@ class Quotelog extends \yii\db\ActiveRecord
             'quoted_date' => 'Quoted Date',
         ];
     }
-
-    
-    public function behaviors(){
-      return [
-            [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'quoted_date',
-                'updatedAtAttribute' => 'quoted_date',
-                'value' => new Expression('NOW()'),
-            ],
-        ];
-      }
 
     /**
      * @return \yii\db\ActiveQuery

@@ -2,6 +2,8 @@
 /* @var $this yii\web\View */
 
 $this->title = 'Lorry App';
+$thisoperatorquoted = false;
+$thisoperatorquotedcount = 0;
 ?>
 <div class="site-index">
 
@@ -13,7 +15,7 @@ $this->title = 'Lorry App';
 
     <div class="row">
         <div class="col-xs-6"><h4>View Order: #<?= $order->id ?></h4></div>
-        <div class="col-xs-6"><h4>Status: <?= ($order->status == 1) ? 'Active' : 'Disabled'; ?></h4></div>
+        <div class="col-xs-6"><h4>Status: <?= ($order->status == 1) ? 'Active' : ($order->status == 2) ? 'Order Completed' : 'Disabled'; ?></h4></div>
     </div>
 
     <div class="row">
@@ -74,40 +76,57 @@ $this->title = 'Lorry App';
 
     <?php if (count($quotelog) > 0)
         foreach ($quotelog as $quote) {
+        if($quote->operator_id == Yii::$app->user->id || $quote->quote_from == "customer"){
+            $thisoperatorquoted = true;
+            
+            if($quote->operator_id == Yii::$app->user->id){
+                $thisoperatorquotedcount++;
+            }
+            
             ?>
             <div class="row">
                 <div class="col-xs-6"><?= ucfirst($quote->quote_from); ?> Quote</div>
                 <div class="col-xs-6"><?= $quote->offer_price; ?></div>
             </div>
-        <?php } ?>
+        <?php }
+        } ?>
     
 <?php //if first time order
-            if ($order->offerprice == "" && $order->offerprice == 0 && count($quotelog) == 0) { ?>
+        if(($order->status != 2))
+            if (($order->offerprice == "" && $order->offerprice == 0 && count($quotelog) == 0) || $thisoperatorquoted == false) { ?>
         <div class="row">
             <form action="<?= BACKENDURL ?>/site/update-quote-log" method="post">
                 <label>Your Quote
                     <input type="hidden" name="Quotelog[order_id]" value="<?= $order->id; ?>" />
                     <input type="number" name="Quotelog[offer_price]" />
                     <input type="hidden" name="Quotelog[quote_from]" value="operator"/>
+                    <input type="hidden" name="Quotelog[operator_id]" value="<?= Yii::$app->user->id;?>"/>
                     <input type='submit' value="Submit"/>
                 </label>
             </form>
 
         </div>
-    <?php } else if (($order->offerprice > 0 && count($quotelog) == 0) || (count($quotelog) > 0 && $quotelog[count($quotelog) - 1]->quote_from == 'customer')) {
+    <?php } else if (($order->offerprice > 0 && count($quotelog) == 0) || (count($quotelog) > 0 && $quotelog[count($quotelog) - 1]->quote_from == 'customer') ) {
        //if not first time quote and last quote was from customer, operator can either accept or quote ?>
         <div class="row">
             <div class="col-xs-12">
-    <?php if (count($quotelog) < 4) { //if less than 4 operator can quote or accept ?>
+    <?php if ($thisoperatorquotedcount < 4) { //if less than 4 quotes made by operator then  operator can quote or accept ?>
                 <form action="<?= BACKENDURL ?>/site/update-quote-log" method="post">
                     <label>Your Quote
                         <input type="hidden" name="Quotelog[order_id]" value="<?= $order->id; ?>" />
                         <input type="number" name="Quotelog[offer_price]" />
                         <input type="hidden" name="Quotelog[quote_from]" value="operator"/>
+                        <input type="hidden" name="Quotelog[quote_from]" value="operator"/>
+                        <input type="hidden" name="Quotelog[operator_id]" value="<?= Yii::$app->user->id;?>"/>
                         <input type='submit' value="Submit"/>
                     </label>
                 </form>
-                <input type="submit" value="Accept"/>
+                <form action="<?= BACKENDURL ?>/site/operator-decision" method="post">
+                    <input type="hidden" name="accept"/>
+                    <input type="hidden" name="order_id" value="<?= $order->id; ?>" />
+                    <input type="hidden" name="operator_id" value="<?= Yii::$app->user->id;?>"/>
+                    <input type="submit" value="Accept"/>
+                </form>
 
     <?php } 
     
@@ -115,39 +134,28 @@ $this->title = 'Lorry App';
                 <form action="<?= BACKENDURL ?>/site/operator-decision" method="post">
                     <input type="hidden" name="accept"/>
                     <input type="hidden" name="order_id" value="<?= $order->id; ?>" />
-                    
+                    <input type="hidden" name="operator_id" value="<?= Yii::$app->user->id;?>"/>
                     <input type="submit" value="Accept"/>
                 </form>
                 <form action="<?= BACKENDURL ?>/site/operator-decision" method="post">
                     <input type="hidden" name="reject"/>
                     <input type="hidden" name="order_id" value="<?= $order->id; ?>" />
-                   
+                    <input type="hidden" name="operator_id" value="<?= Yii::$app->user->id;?>"/>
                     <input type="submit" value="Reject"/>
                 </form>
 
 
         <?php }
         
-        else{ //if decision is made  ?>
-            <span><?= $order->status == STATUS_ACCEPT? "Accepted" : "Rejected"?></span>
-            <?php if($order->status == STATUS_ACCEPT ){ ?>
-            
-            <div class="row"><div class="col-xs-12">Customer Information</div></div>
-            <?php if(isset($user)){ ?>
-            <div class="row"><div class="col-xs-12"><?= "Name  ". $user->company_name;?></div></div>
-            <div class="row"><div class="col-xs-12"><?= "Phone Number  ". $user->company_phone;?></div></div>
-            <?php }
-            else{
-                echo "Sorry, User has not updated his profile. He shall contact you directly";
-            }
-            
-            } ?>
-      <?php  }
         ?>
             </div>
         </div>
-    <?php } else { //echo 'here';
-        ?>
+    <?php } else { //echo 'here'; ?>
+        
+    <div class="row">
+        <div class="col-xs-12"><span>Awaiting customer reply</span></div>
+    </div>
+       
         <!-- <div class="row">
             
              <form action="<?= BACKENDURL ?>/site/update-quote-log" method="post">
@@ -161,5 +169,21 @@ $this->title = 'Lorry App';
             
             
         </div> -->
-<?php } ?>
+<?php }
+        
+        if($order->status == 2 && $order->accepted_operator == Yii::$app->user->id){ //if decision is made  ?>
+            <span><?= $order->status == STATUS_ACCEPT? "Accepted" : "Rejected"?></span>
+            <?php if($order->status == STATUS_ACCEPT ){ ?>
+            
+            <div class="row"><div class="col-xs-12">Customer Information</div></div>
+            <?php if(isset($user)){ ?>
+            <div class="row"><div class="col-xs-12"><?= "Name  ". $user->company_name;?></div></div>
+            <div class="row"><div class="col-xs-12"><?= "Phone Number  ". $user->company_phone;?></div></div>
+            <?php }
+            else{
+                echo "Sorry, User has not updated his profile. He/She shall contact you directly";
+            }
+            
+            } ?>
+      <?php  } ?>
 </div>

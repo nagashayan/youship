@@ -29,7 +29,7 @@ class SiteController extends Controller {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup','view-order','delete-order','update-order','place-order'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -37,7 +37,7 @@ class SiteController extends Controller {
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout','view-order','delete-order','update-order','place-order'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -90,6 +90,10 @@ class SiteController extends Controller {
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            $user = \common\models\User::find()->where("id = ".Yii::$app->user->getId())->one();
+           
+            if($model->operator)
+                return $this->goBack(BACKENDURL);
             
             return $this->goHome();
         } else {
@@ -299,10 +303,12 @@ class SiteController extends Controller {
             ]);
             }
                
-          
+            if($model->status == STATUS_ACCEPT){ echo $model->accepted_operator;
+                $user = \frontend\models\Profile::find()->where("id = $model->accepted_operator")->one();
+            }
 
             return $this->render('vieworder', [
-                        'model' => $model, 'model1' => $model1,
+                        'model' => $model, 'model1' => $model1,'user'=>$user
             ]);
         }
         else {

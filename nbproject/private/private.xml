@@ -3,9 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/opt/lampp/htdocs/youship/backend/controllers/OrdersController.php</file>
-            <file>file:/opt/lampp/htdocs/youship/backend/controllers/OrderInfoController.php</file>
-            <file>file:/opt/lampp/htdocs/youship/backend/views/order-info/_form.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/common/models/LoginForm.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/frontend/controllers/SiteController.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/backend/views/site/vieworder.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/common/models/User.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/common/models/Quotelog.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/backend/views/layouts/main.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/backend/controllers/SiteController.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/frontend/views/site/vieworders.php</file>
         </group>
     </open-files>
 </project-private>

@@ -34,7 +34,16 @@ $this->title = 'Order placed';
          <div class="col-xs-4"><div class="row"><div class="col-xs-12"><strong>Offer Price</strong></div></div><div class="row"><div class="col-xs-12"><?= $model->offerprice;?></div></div></div>
          
      </div>
-     
+     <?php if($model->status == STATUS_ACCEPT){ ?>
+     <div class="row"><div class="col-xs-12">Operator Information</div></div>
+            <?php if(isset($user)){ ?>
+            <div class="row"><div class="col-xs-12"><?= "Name  ". $user->company_name;?></div></div>
+            <div class="row"><div class="col-xs-12"><?= "Phone Number  ". $user->company_phone;?></div></div>
+            <?php }
+            else{
+                echo "Sorry, Operator has not updated his profile. He/She shall contact you directly";
+            }
+      }?>
     <?php } 
     else { ?>
     <h4><?= $error;?></h4>

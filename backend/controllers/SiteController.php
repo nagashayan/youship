@@ -94,7 +94,8 @@ class SiteController extends Controller
         $orderinfo = \common\models\OrderInfo::find()->where("order_id = $id")->one();
         
         //get all quote info from quote log table
-        $quotelog = \common\models\Quotelog::find()->where("order_id = $id")->all();
+        //$quotelog = \common\models\Quotelog::find()->where("order_id = $id and (operator_id = ".Yii::$app->user->id." || quote_from ='customer') ")->all();
+        $quotelog = \common\models\Quotelog::find()->where("order_id = $id  ")->all();
         return $this->render('vieworder',['order'=>$order,'orderinfo'=>$orderinfo,
             'quotelog'=>$quotelog,'user'=>$user]);
         
@@ -133,7 +134,8 @@ class SiteController extends Controller
         
         if(Yii::$app->request->post('order_id') != ""){
          
-        $id = Yii::$app->request->post('order_id');    
+        $id = Yii::$app->request->post('order_id'); 
+        $operator_id = Yii::$app->request->post('operator_id'); 
         $accept = true;
         $reject = false;
         if(Yii::$app->request->post('reject') != ""){
@@ -144,11 +146,13 @@ class SiteController extends Controller
         //get all quote info from quote log table
         
         if($accept){
+            
             $order->status = STATUS_ACCEPT;
+            $order->accepted_operator = $operator_id;
         }
-        else{
+        /*else{
             $order->status = STATUS_REJECT;
-        }
+        }*/
         $order->save();
         
         

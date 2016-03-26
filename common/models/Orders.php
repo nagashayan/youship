@@ -116,7 +116,7 @@ class Orders extends \yii\db\ActiveRecord
        */
       public function getLastCustomerQuote($id){
           //get last quote for custom from quote log
-          $quotelog = Quotelog::find()->where("order_id = $id and quote_from = 'customer'")->orderBy("quoted_date")->one();
+          $quotelog = Quotelog::find()->where("order_id = $id and quote_from = 'customer'")->orderBy("quoted_date desc")->one();
           if(isset($quotelog->id)){
              return $quotelog->offer_price; 
           }
@@ -131,7 +131,7 @@ class Orders extends \yii\db\ActiveRecord
        */
       public function getLastOperatorQuote($id){
           //get last quote for custom from quote log
-          $quotelog = Quotelog::find()->where("order_id = $id and quote_from = 'operator'")->orderBy("quoted_date desc")->one();
+          $quotelog = Quotelog::find()->where("order_id = $id and quote_from = 'operator'")->orderBy("quoted_date DESC,offer_price asc")->one();
           if(isset($quotelog->id)){
              return $quotelog->offer_price; 
           }
@@ -149,7 +149,8 @@ class Orders extends \yii\db\ActiveRecord
           $id = $order->id;
           $quote = Quotelog::find()->where("order_id = $id")->orderBy("id desc")->one();
           if(isset($quote->id)){
-              if($quote->quote_from == "operator" && Quotelog::find()->where("order_id = $id")->orderBy("id desc")->count() < 4){
+             // if($quote->quote_from == "operator" && Quotelog::find()->where("order_id = $id")->orderBy("id desc")->count() < 4){
+              if($quote->quote_from == "operator"){
                   return true;
               }
               

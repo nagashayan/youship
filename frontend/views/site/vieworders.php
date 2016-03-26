@@ -7,7 +7,7 @@ $this->title = 'Order placed';
 <div class="site-index">
     <div class="container">
     <div class="row">
-        <div class="col-xs-10">
+        <div class="col-xs-12">
     <h2>All your orders</h2>
     <?php if(isset($error)) { ?>
     <div class="danger"><?= $error;?></div>
@@ -21,6 +21,7 @@ $this->title = 'Order placed';
         <th>Operator Last Quote</th>
         <th>Last Update</th>
         <th>New Quote</th>
+        <th>Status</th>
         <th>View</th>
         <th>Edit</th>        
         <th>Delete</th>
@@ -38,6 +39,7 @@ $this->title = 'Order placed';
             <td><?= $order->updatedon;?></td>
             
             <td><input type="number" data-id="<?= $order->id?>" class="new-offer-price" <?= (!$order->getCustomerQuoteStatus($order) ? "disabled" : "")?>/></td>
+            <td><?= ($order->status == 1) ? 'Active' : ($order->status == 2) ? 'Order Completed' : 'Disabled'; ?></td>
             
             <td><a href="<?= DOMAINURL?>/site/view-order?id=<?= $order->id;?>"><i class="fa fa-eye"></i></a></td>
             
