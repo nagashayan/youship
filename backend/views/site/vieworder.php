@@ -14,8 +14,8 @@ $thisoperatorquotedcount = 0;
     ?>
 
     <div class="row">
-        <div class="col-xs-6"><h4>View Order: #<?= $order->id ?></h4></div>
-        <div class="col-xs-6"><h4>Status: <?= ($order->status == 1) ? 'Active' : ($order->status == 2) ? 'Order Completed' : 'Disabled'; ?></h4></div>
+        <div class="col-xs-6"><h4>View Order: #<?= $order->id.$order->status ?></h4></div>
+        <div class="col-xs-6"><h4>Status: <?= ($order->status == 1) ? 'Active' : (($order->status == 2) ? 'Order Completed' : 'Disabled'); ?></h4></div>
     </div>
 
     <div class="row">

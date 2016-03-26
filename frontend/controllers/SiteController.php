@@ -257,7 +257,7 @@ class SiteController extends Controller {
     public function actionUpdateOrder($id) {
         if (!Yii::$app->user->isGuest) {
             $ordermodel = Orders::find()->where("id = $id")->one();
-
+            if ($ordermodel != "" && $ordermodel->userid == Yii::$app->user->id){
             if (isset($ordermodel->id)) { 
                 $orderinfomodel = OrderInfo::find()->where("order_id = $ordermodel->id")->one();
 
@@ -275,6 +275,7 @@ class SiteController extends Controller {
                                 'ordermodel' => $ordermodel, 'orderinfomodel' => $orderinfomodel
                     ]);
                 }
+            }
             }
         }
         return $this->render('error', [ 'name'=>'Error',
@@ -361,6 +362,34 @@ class SiteController extends Controller {
                print_r($quotemodel->getErrors());
             }
         }
+    }
+    
+    /**
+     * 
+     * resets  order as new order
+     */
+    public function actionResetOrder($id) {
+        if (!Yii::$app->user->isGuest) {
+            
+            $ordermodel = Orders::find()->where("id = $id")->one();
+            if ($ordermodel != "" && $ordermodel->userid == Yii::$app->user->id){
+            if (isset($ordermodel->id)) { 
+                
+
+                  $ordermodel->accepted_operator = null;
+                  $ordermodel->status = STATUS_OPEN;
+                  $ordermodel->save();
+                  
+                  //delete all quote logs
+                  \common\models\Quotelog::deleteAll("order_id = $ordermodel->id");
+                   $this->goBack();
+                
+            }
+            }
+        }
+        return $this->render('error', [ 'name'=>'Error',
+                    'message' => ACCESSDENIED
+        ]);
     }
 
 }

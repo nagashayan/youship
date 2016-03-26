@@ -19,12 +19,13 @@ $this->title = 'Order placed';
         
         <th>Your Last Quote</th>
         <th>Operator Last Quote</th>
-        <th>Last Update</th>
+       
         <th>New Quote</th>
         <th>Status</th>
         <th>View</th>
         <th>Edit</th>        
         <th>Delete</th>
+        <th>Reset</th>
       </tr>
     </thead>
     <tbody>
@@ -36,7 +37,7 @@ $this->title = 'Order placed';
             
             <td><?= $operatorquote = $order->getLastOperatorQuote($order->id);?></td>
             
-            <td><?= $order->updatedon;?></td>
+           
             
             <td><input type="number" data-id="<?= $order->id?>" class="new-offer-price" <?= (!$order->getCustomerQuoteStatus($order) ? "disabled" : "")?>/></td>
             <td><?= ($order->status == 1) ? 'Active' : ($order->status == 2) ? 'Order Completed' : 'Disabled'; ?></td>
@@ -51,6 +52,8 @@ $this->title = 'Order placed';
                     <i class="fa fa-trash-o"></i>
                 </a>
             </td>
+            <td> <a href="<?= DOMAINURL?>/site/reset-order?id=<?= $order->id;?>"
+                    data-confirm="Are you sure you want to reset this order? reseting will start bidding system from scratch" data-method="post"><span class="glyphicon glyphicon-repeat"></span></a> </td>
         </tr>
     <?php } ?>
     </tbody>
