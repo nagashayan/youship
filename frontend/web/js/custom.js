@@ -19,3 +19,7 @@ $(".new-offer-price").keypress(function(e){
     }
 });
 
+$(".refresh-btn").click(function(){
+   window.location.reload(); 
+});
+

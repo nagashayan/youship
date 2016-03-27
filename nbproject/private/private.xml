@@ -7,9 +7,13 @@
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/frontend/controllers/SiteController.php</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/backend/views/site/vieworder.php</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/common/models/User.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/frontend/web/js/custom.js</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/common/models/Quotelog.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/common/components/constants.php</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/backend/views/layouts/main.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/common/models/Orders.php</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/backend/controllers/SiteController.php</file>
+            <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/frontend/views/site/vieworder.php</file>
             <file>file:/Applications/XAMPP/xamppfiles/htdocs/youship/frontend/views/site/vieworders.php</file>
         </group>
     </open-files>

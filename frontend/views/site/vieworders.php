@@ -8,7 +8,7 @@ $this->title = 'Order placed';
     <div class="container">
     <div class="row">
         <div class="col-xs-12">
-    <h2>All your orders</h2>
+            <h2>All your orders</h2>&nbsp;<button class="btn btn-primary pull-right refresh-btn">Refresh</button>
     <?php if(isset($error)) { ?>
     <div class="danger"><?= $error;?></div>
     <?php } ?>
@@ -67,3 +67,8 @@ $this->title = 'Order placed';
     </div>
     </div>
 </div>
+<script type="text/javascript">
+    /*every 5 min trigger refresh btn*/
+    
+    setInterval(function(){ $( ".refresh-btn" ).trigger( "click" ); }, 300000);
+</script>

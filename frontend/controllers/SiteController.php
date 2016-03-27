@@ -313,7 +313,7 @@ class SiteController extends Controller {
             ]);
         }
         else {
-            echo 'showing all' . Yii::$app->user->id;
+            //echo 'showing all' . Yii::$app->user->id;
             //get all orders by current user
             $model = Orders::find()->where("userid = " . Yii::$app->user->id)->orderBy('updatedon')->all();
             return $this->render('vieworders', [

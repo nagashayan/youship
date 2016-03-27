@@ -53,3 +53,7 @@ $this->title = 'Order placed';
     </div>
     </div>
 </div>
+<script type="text/javascript">
+    /*every 5 min trigger refresh btn*/
+        setInterval(function(){ $( ".refresh-btn" ).trigger( "click" ); }, 300000);
+</script>

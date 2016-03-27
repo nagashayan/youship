@@ -131,7 +131,7 @@ class Orders extends \yii\db\ActiveRecord
        */
       public function getLastOperatorQuote($id){
           //get last quote for custom from quote log
-          $quotelog = Quotelog::find()->where("order_id = $id and quote_from = 'operator'")->orderBy("quoted_date DESC,offer_price asc")->one();
+          $quotelog = Quotelog::find()->where("order_id = $id and quote_from = 'operator'")->orderBy("offer_price asc")->one();
           if(isset($quotelog->id)){
              return $quotelog->offer_price; 
           }
