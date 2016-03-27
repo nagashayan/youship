@@ -160,4 +160,21 @@ class Orders extends \yii\db\ActiveRecord
           
           
       }
+      
+      /**
+       * get accepted quote details
+       */
+      public function acceptedQuote($id){
+          $order = \common\models\Orders::find()->where("id = $id")->one();
+        //get all quote info from quote log table
+        
+       
+            //get quote details
+            $quotelog = \common\models\Quotelog::find()->where("order_id = $id and operator_id = $order->accepted_operator")->orderBy("offer_price")->one();
+           
+            echo $quotelog->offer_price;
+            
+
+        
+      }
 }

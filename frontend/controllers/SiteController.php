@@ -92,7 +92,7 @@ class SiteController extends Controller {
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $user = \common\models\User::find()->where("id = ".Yii::$app->user->getId())->one();
            
-            if($model->operator)
+            if($user->operator)
                 return $this->goBack(BACKENDURL);
             
             return $this->goHome();
@@ -347,12 +347,19 @@ class SiteController extends Controller {
      * update customer quote
      */
     public function actionUpdateCustomerQuote(){ 
-    print_r(Yii::$app->request->post());
-        if(Yii::$app->request->post('id') != "" && Yii::$app->request->post('offerprice') != ""){ echo 'in';
+    
+        if(Yii::$app->request->post('id') != "" && Yii::$app->request->post('offerprice') != ""){
             $id = Yii::$app->request->post('id');
             $offer_price = Yii::$app->request->post('offerprice');
             $model = Orders::find()->where("id = $id")->one();
             if ($model != "" && $model->userid == Yii::$app->user->id){
+               //check if customer price is less than all other quotes
+               $quotes = \common\models\Quotelog::find()->where("order_id = $model->id")->orderBy("offer_price asc")->one();
+               //echo $quotes->offer_price;die();
+               if($offer_price >= $quotes->offer_price){
+                   echo "enter again";
+               }
+               else{
                $quotemodel =  new \common\models\Quotelog();
                $quotemodel->order_id = $model->id;
                $quotemodel->offer_price = $offer_price;
@@ -360,6 +367,7 @@ class SiteController extends Controller {
                
                $quotemodel->save();
                print_r($quotemodel->getErrors());
+            }
             }
         }
     }
@@ -390,6 +398,47 @@ class SiteController extends Controller {
         return $this->render('error', [ 'name'=>'Error',
                     'message' => ACCESSDENIED
         ]);
+    }
+    
+    
+    /**
+     * whether customer accepts  decision will be save here
+     */
+    public function actionCustomerDecision(){
+        
+        if(Yii::$app->request->post('order_id') != ""){
+         
+        $id = Yii::$app->request->post('order_id'); 
+        
+        $accept = true;
+        $reject = false;
+        if(Yii::$app->request->post('reject') != ""){
+            $accept = false;
+            $reject = true;
+        }
+        $order = \common\models\Orders::find()->where("id = $id")->one();
+        //get all quote info from quote log table
+        
+        if($accept){ 
+            //get quote details
+            $quotelog = \common\models\Quotelog::find()->where("order_id = $id and quote_from = 'operator'")->orderBy("offer_price")->one();
+            if(isset($quotelog->operator_id)){
+                $order->status = STATUS_ACCEPT;
+                $order->accepted_operator = $quotelog->operator_id;
+                $order->accepted_by = "customer";
+                $order->save();
+               
+            }
+
+        }
+        /*else{
+            $order->status = STATUS_REJECT;
+        }*/
+        
+        
+        return $this->redirect('view-order');
+        }
+        
     }
 
 }

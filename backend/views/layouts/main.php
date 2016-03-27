@@ -43,6 +43,7 @@ AppAsset::register($this);
     } else {
         $menuItems = [
             ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Employee Info', 'url' => ['/employee-info/index']],
             ['label' => 'Profile', 'url' => ['/profile']],    
             [
             'label' => 'Logout (' . Yii::$app->user->identity->username . ')',

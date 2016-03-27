@@ -55,8 +55,14 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        $user = \common\models\User::find()->where("id = ".Yii::$app->user->id)->one();
+        if($user->operator != NULL){
         $orderfeed = \common\models\Orders::find()->where("status != '".STATUS_DISABLE."'")->orderBy('updatedon desc')->all();
         return $this->render('index',['orderfeed'=>$orderfeed]);
+        }
+        else{
+            return $this->redirect(FRONTENDURL);
+        }
     }
 
     public function actionLogin()
@@ -146,14 +152,17 @@ class SiteController extends Controller
         //get all quote info from quote log table
         
         if($accept){
-            
-            $order->status = STATUS_ACCEPT;
-            $order->accepted_operator = $operator_id;
+            if($order->status == STATUS_OPEN){
+                $order->status = STATUS_ACCEPT;
+                $order->accepted_operator = $operator_id;
+                $order->accepted_by = "operator";
+                $order->save();
+            }
         }
         /*else{
             $order->status = STATUS_REJECT;
         }*/
-        $order->save();
+       
         
         
         return $this->goBack();

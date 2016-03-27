@@ -39,8 +39,24 @@ $this->title = 'Order placed';
             
            
             
-            <td><input type="number" data-id="<?= $order->id?>" class="new-offer-price" <?= (!$order->getCustomerQuoteStatus($order) ? "disabled" : "")?>/></td>
-            <td><?= ($order->status == 1) ? 'Active' : ($order->status == 2) ? 'Order Completed' : 'Disabled'; ?></td>
+                    <td>
+                        <?php if($order->status == STATUS_OPEN){ ?>
+                        <span class="pull-left"><input type="number" data-id="<?= $order->id?>" class="new-offer-price" <?= (!$order->getCustomerQuoteStatus($order) ? "disabled" : "")?>/>
+                           &nbsp; <span class="pull-right"> <form action="<?= FRONTENDURL ?>/site/customer-decision" method="post">
+                                <input type="hidden" name="accept"/>
+                                <input type="hidden" name="order_id" value="<?= $order->id; ?>" />
+                                <input type="hidden" name="operator_id" value="<?= Yii::$app->user->id;?>"/>
+                                <input type="submit" value="Accept"/>
+                            </form></span></span>
+                        <?php } else { //get price and send operator info
+                                
+                                echo $order->acceptedQuote($order->id);
+                            
+                       } ?>
+
+                        
+                    </td>
+            <td><?= ($order->status == 1) ? 'Active' : (($order->status == 2) ? 'Order Completed' : 'Disabled'); ?></td>
             
             <td><a href="<?= DOMAINURL?>/site/view-order?id=<?= $order->id;?>"><i class="fa fa-eye"></i></a></td>
             

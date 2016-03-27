@@ -14,6 +14,10 @@ $(".new-offer-price").keypress(function(e){
     },
     function(data, status){
         console.log("Data: " + data + "\nStatus: " + status);
+        if(data == "enter again"){
+            alert("Your quote should be less than operator quote");
+            
+        }
         window.location.href = DOMAINURL+"/site/view-order";
     });
     }
