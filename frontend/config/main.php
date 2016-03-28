@@ -27,6 +27,7 @@ return [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
+              'maxSourceLines' => 2,
         ],
     ],
     'params' => $params,

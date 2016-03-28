@@ -52,10 +52,18 @@ class ProfileController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
+    {   
+        $model =  $this->findModel($id);
+        if($model->user_id == Yii::$app->user->getId()){
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
+        }
+        else{
+             $message = ACCESSDENIED;
+                 return $this->render('/site/error', [
+                        'name' => 'Error', 'message'=>$message ]);
+        }
     }
 
     /**
@@ -85,7 +93,9 @@ class ProfileController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model =  $this->findModel($id);
+        if($model->user_id == Yii::$app->user->getId()){
+       
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -93,6 +103,12 @@ class ProfileController extends Controller
             return $this->render('update', [
                 'model' => $model,
             ]);
+        }
+        }
+        else{
+             $message = ACCESSDENIED;
+                 return $this->render('site/error', [
+                        'name' => 'Error', 'message'=>$message ]);
         }
     }
 
@@ -104,9 +120,17 @@ class ProfileController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $data =  $this->findModel($id);
+        if($data->user_id == Yii::$app->user->getId()){
+        $data->delete();
 
         return $this->redirect(['index']);
+        }
+        else{
+             $message = ACCESSDENIED;
+                 return $this->render('/site/error', [
+                        'name' => 'Error', 'message'=>$message ]);
+        }
     }
 
     /**
