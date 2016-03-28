@@ -37,8 +37,6 @@ $this->title = 'Order placed';
             
             <td><?= $operatorquote = $order->getLastOperatorQuote($order->id);?></td>
             
-           
-            
                     <td>
                         <?php if($order->status == STATUS_OPEN){ ?>
                         <span class="pull-left"><input type="number" data-id="<?= $order->id?>" class="new-offer-price" <?= (!$order->getCustomerQuoteStatus($order) ? "disabled" : "")?>/>
@@ -48,11 +46,112 @@ $this->title = 'Order placed';
                                 <input type="hidden" name="operator_id" value="<?= Yii::$app->user->id;?>"/>
                                 <input type="submit" value="Accept"/>
                             </form></span></span>
-                        <?php } else { //get price and send operator info
+                        <?php } else { //get price and send operator info ?>
                                 
-                                echo $order->acceptedQuote($order->id);
+                        <span><?= $order->acceptedQuote($order->id); ?> </span><br>
+                        <span><a href="" data-toggle="modal" data-target="#myModal" style="position:relative">View operator info</a>
+                        <div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title">Operator Information</h3>
+      </div>
+      <div class="modal-body">
+          <?php $profile = $order->acceptedOperator($order->accepted_operator);?>
+          
+                  <div class="row">
+                      <div class="col-xs-12">
+                          <div class="row">
+                      <div class="col-xs-4">
+                          <span>Name:</span>
+                      </div>
+                              <div class="col-xs-8">
+                           <span><?= $profile->company_name;?></span>
+                      </div>
+                          </div>
+                          
                             
-                       } ?>
+                          </div>
+                          
+                          
+                      </div>
+              <div class="row">
+                      <div class="col-xs-12">
+                            <div class="row">
+                      <div class="col-xs-4">
+                           <span>Email:</span>
+                      </div>
+                              <div class="col-xs-8">
+                          <span><?= $profile->company_email;?></span>
+                      </div>
+                          </div>
+                         
+                              
+                          </div>
+                          
+                          
+                      </div>
+              <div class="row">
+                      <div class="col-xs-12">
+                             <div class="row">
+                      <div class="col-xs-4">
+                           <span>Phone:</span>
+                      </div>
+                              <div class="col-xs-8">
+                            <span><?= $profile->company_phone;?></span>
+                      </div>
+                          </div>
+                          
+                            
+                          </div>
+                          
+                          
+                      </div>
+              <div class="row">
+                      <div class="col-xs-12">
+                             <div class="row">
+                      <div class="col-xs-4">
+                            <span>Address:</span>
+                      </div>
+                              <div class="col-xs-8">
+                            <span><?= $profile->company_address;?></span>
+                      </div>
+                          </div>
+                         
+                             
+                          </div>
+                          
+                          
+                      </div>
+              <div class="row">
+                      <div class="col-xs-12">
+                            <div class="row">
+                      <div class="col-xs-4">
+                            <span>Other Info:</span>
+                      </div>
+                              <div class="col-xs-8">
+                             <span><?= $profile->contact_info;?></span>
+                      </div>
+                          </div>
+                         
+                            
+                          </div>
+                          
+                          
+                      </div>
+                  
+          
+      </div>
+      
+
+  </div>
+</div>
+</div></span>
+                            <!-- Modal -->
+                  <?php } ?>
 
                         
                     </td>
@@ -83,6 +182,7 @@ $this->title = 'Order placed';
     </div>
     </div>
 </div>
+
 <script type="text/javascript">
     /*every 5 min trigger refresh btn*/
     

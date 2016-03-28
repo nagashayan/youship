@@ -49,10 +49,10 @@ $thisoperatorquotedcount = 0;
     </div>
 
     <div class="row">
-        <div class="col-xs-3">Height: <?= $orderinfo->height ?></div>
-        <div class="col-xs-3">Width: <?= $orderinfo->width ?></div>
-        <div class="col-xs-3">Length: <?= $orderinfo->length ?></div>
-        <div class="col-xs-3">Weight: <?= $orderinfo->weight ?></div>
+        <div class="col-xs-3">Height: <?= $orderinfo->height." inch" ?></div>
+        <div class="col-xs-3">Width: <?= $orderinfo->width." inch" ?></div>
+        <div class="col-xs-3">Length: <?= $orderinfo->length." inch" ?></div>
+        <div class="col-xs-3">Weight: <?= $orderinfo->weight." inch" ?></div>
     </div>
 
     <div class="row">

@@ -36,6 +36,7 @@ AppAsset::register($this);
         <!-- REVOLUTION BANNER CSS SETTINGS -->
         <link rel="stylesheet" type="text/css" href="<?= FRONTENDURL; ?>/css/settings.css" media="screen"/>
         <link rel="stylesheet" type="text/css" href="<?= FRONTENDURL; ?>/css/style.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="<?= FRONTENDURL; ?>/css/custom.css" media="screen">
         <?php $this->head() ?>
     </head>
     <body>

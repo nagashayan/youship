@@ -177,4 +177,19 @@ class Orders extends \yii\db\ActiveRecord
 
         
       }
+      
+      /**
+       * get accepted quote details
+       */
+      public function acceptedOperator($id){
+         
+            //get operator profile
+            $profile = \frontend\models\Profile::find()->where("user_id = $id")->one();
+           
+            return $profile;
+            
+
+        
+      }
+      
 }

@@ -287,7 +287,7 @@ class SiteController extends Controller {
      * see all your orders
      */
     public function actionViewOrder($id = null) {
-       
+       $user = null;
         if ($id) {
            
             
@@ -304,9 +304,7 @@ class SiteController extends Controller {
             ]);
             }
                
-            if($model->status == STATUS_ACCEPT){ echo $model->accepted_operator;
-                $user = \frontend\models\Profile::find()->where("id = $model->accepted_operator")->one();
-            }
+          
 
             return $this->render('vieworder', [
                         'model' => $model, 'model1' => $model1,'user'=>$user

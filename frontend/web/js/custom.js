@@ -18,7 +18,7 @@ $(".new-offer-price").keypress(function(e){
             alert("Your quote should be less than operator quote");
             
         }
-        window.location.href = DOMAINURL+"/site/view-order";
+      //  window.location.href = DOMAINURL+"/site/view-order";
     });
     }
 });

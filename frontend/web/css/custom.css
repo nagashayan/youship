@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 28, 2016, 8:20:34 PM
+    Author     : nagashayana r
+*/
+.modal-dialog{
+    z-index: 9999;
+}
+.modal-body{
+    padding: 15px;
+    font-size: 16px;
+    font-weight: 500;
+}
+.modal-body span{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+@media (min-width: 1020px) and (max-width: 1280px) {
+    .modal-dialog{
+        left: 80px;
+    }
+} 
+@media (max-width: 1200px) {
+    .modal-dialog{
+        top: 200px;
+    }
+}
+
+.order-details{
+    font-size: 17px;
+}
+
+.info-div{
+    padding-top: 10px;
+    padding-bottom: 15px;
+}

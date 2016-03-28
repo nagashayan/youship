@@ -56,8 +56,9 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $user = \common\models\User::find()->where("id = ".Yii::$app->user->id)->one();
+        $currentoperator = Yii::$app->user->id;
         if($user->operator != NULL){
-        $orderfeed = \common\models\Orders::find()->where("status != '".STATUS_DISABLE."'")->orderBy('updatedon desc')->all();
+        $orderfeed = \common\models\Orders::find()->where("status = ".STATUS_ACCEPT." || accepted_operator =  $currentoperator")->orderBy('updatedon desc')->all();
         return $this->render('index',['orderfeed'=>$orderfeed]);
         }
         else{
@@ -89,13 +90,13 @@ class SiteController extends Controller
     }
     
     public function actionViewCompleteOrder($id){
-        echo $id;
         $user = null;
         $order = \common\models\Orders::find()->where("id = $id")->one();
         
         if($order->status == STATUS_ACCEPT){ 
             //fetch user information
-            $user = \common\models\Profile::find()->where("user_id = $order->userid")->one();
+            $user = \common\models\Profile::find()->where("user_id = $order->accepted_operator")->one();
+            
         }
         $orderinfo = \common\models\OrderInfo::find()->where("order_id = $id")->one();
         
