@@ -14,6 +14,16 @@ $this->title = 'Login';
     
     <div class="container">
         <h1><?= Html::encode($this->title) ?></h1>
+        <?php if(isset($msg)){ ?>
+        <div class="alert alert-success">
+            <?= nl2br(Html::encode($msg)) ?>
+        </div>
+        <?php } ?>
+      <?php if(isset($error)){ ?>
+        <div class="alert alert-danger">
+            <?= nl2br(Html::encode($error)) ?>
+        </div>
+        <?php } ?>
     <p>Please fill out the following fields to login:</p>
 
     <div class="row">
