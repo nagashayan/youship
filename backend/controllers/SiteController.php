@@ -58,7 +58,7 @@ class SiteController extends Controller
         $user = \common\models\User::find()->where("id = ".Yii::$app->user->id)->one();
         $currentoperator = Yii::$app->user->id;
         if($user->operator != NULL){
-        $orderfeed = \common\models\Orders::find()->where("status = ".STATUS_ACCEPT." || accepted_operator =  $currentoperator")->orderBy('updatedon desc')->all();
+        $orderfeed = \common\models\Orders::find()->where("status = ".STATUS_OPEN." || accepted_operator =  $currentoperator")->orderBy('updatedon desc')->all();
         return $this->render('index',['orderfeed'=>$orderfeed]);
         }
         else{
