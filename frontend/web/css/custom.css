@@ -7,6 +7,24 @@ and open the template in the editor.
     Created on : Mar 28, 2016, 8:20:34 PM
     Author     : nagashayana r
 */
+
+.top-line ul.social-icons .signin,.top-line ul.social-icons .register{
+    width: 106px;
+}
+.top-line ul.social-icons .signin{
+    margin-right: 2px;
+}
+header nav.nav-menu ul.menu-list li .mobile-auth{
+   display: none;
+}
+.gps-img-parent{
+    position: relative;
+}
+.gps-symbol{
+    position: absolute;
+    top: 33px;
+    right: 20px;
+}
 .modal-dialog{
     z-index: 9999;
 }

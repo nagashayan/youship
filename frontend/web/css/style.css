@@ -2191,22 +2191,3 @@ footer p.copyright {
   }
 }
 
-/** custom css **/
-
-.top-line ul.social-icons .signin,.top-line ul.social-icons .register{
-    width: 106px;
-}
-.top-line ul.social-icons .signin{
-    margin-right: 2px;
-}
-header nav.nav-menu ul.menu-list li .mobile-auth{
-   display: none;
-}
-.gps-img-parent{
-    position: relative;
-}
-.gps-symbol{
-    position: absolute;
-    top: 33px;
-    left: 236px;
-}

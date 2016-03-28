@@ -13,7 +13,7 @@ use kartik\date\DatePicker;
 <div class="orders-form">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-xs-12">
                 <h3>Place your order</h3>
                 <div class="order-info-form">
                     <?php
@@ -22,7 +22,7 @@ use kartik\date\DatePicker;
                     ]);
                     ?>
                     <div class="row">
-                        <div class="col-lg-9"> 
+                        <div class="col-xs-12 col-lg-9"> 
                             <?= $form->field($ordermodel, 'title')->textInput(['maxlength' => true]) ?>
 
                             <?= $form->field($ordermodel, 'description')->textArea(['maxlength' => true]) ?>
@@ -31,18 +31,18 @@ use kartik\date\DatePicker;
 
                     <div class="row">
                        
-                        <div class="col-lg-3 gps-img-parent">
+                        <div class="col-xs-4 col-lg-3 gps-img-parent">
                             <?= $form->field($ordermodel, 'pickuplocation')->textInput(['maxlength' => true]);?>
                             <img class="gps-symbol" onclick="getLocation('#orders-pickuplocation')" src="<?=DOMAINURL;?>/images/gps.png"/>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-xs-4 col-lg-3">
                             <?=
                             $form->field($ordermodel, 'pickuplocationtype')->textInput(['maxlength' => true])->dropDownList(
                                     ['residential' => 'Residential', 'office' => 'Office']
                             );
                             ?>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-xs-4 col-lg-3">
                             <div class="form-group field-orders-pickupdate1 required ">
                                 <label class="control-label" for="orders-pickupdate1">Pickup Date</label>
                                 <?=
@@ -86,18 +86,18 @@ use kartik\date\DatePicker;
                   ?>
                     -->
                     <div class="row">
-                        <div class="col-lg-3 gps-img-parent">
+                        <div class="col-xs-4 col-lg-3 gps-img-parent">
                             <?= $form->field($ordermodel, 'deliverylocation')->textInput(['maxlength' => true]) ?>
                             <img class="gps-symbol" onclick="getLocation('#orders-deliverylocation')" src="<?=DOMAINURL;?>/images/gps.png"/>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-xs-4 col-lg-3">
                             <?=
                             $form->field($ordermodel, 'deliverylocationtype')->textInput(['maxlength' => true])->dropDownList(
                                     ['residential' => 'Residential', 'office' => 'Office']
                             );
                             ?>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-xs-4 col-lg-3">
                             <div class="form-group field-orders-deliverydate1 required ">
                                 <label class="control-label" for="orders-deliverydate1">Delivery Date</label>
                                 <?=
@@ -140,29 +140,29 @@ use kartik\date\DatePicker;
                     <!--  order info -->
 
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-xs-4 col-lg-3">
 
-                            <?= $form->field($orderinfomodel, 'width')->textInput() ?>
+                            <?= $form->field($orderinfomodel, 'width')->textInput()->label("Width (In inches)") ?>
                         </div>
-                        <div class="col-lg-3">
-                            <?= $form->field($orderinfomodel, 'height')->textInput() ?>
+                        <div class="col-xs-4 col-lg-3">
+                            <?= $form->field($orderinfomodel, 'height')->textInput()->label("Height (In inches)") ?>
                                                     </div>
-                                                    <div class="col-lg-3">
-                            <?= $form->field($orderinfomodel, 'length')->textInput() ?>
+                                                    <div class="col-xs-3">
+                            <?= $form->field($orderinfomodel, 'length')->textInput()->label("Length (In inches)") ?>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
-                            <?= $form->field($orderinfomodel, 'weight')->textInput() ?>
+                        <div class="col-xs-4 col-lg-3">
+                            <?= $form->field($orderinfomodel, 'weight')->textInput()->label("Weight (in Kg)") ?>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-xs-4 col-lg-3">
                             <?=
                             $form->field($orderinfomodel, 'breakable')->textInput()->dropDownList(
                                     ['0' => 'No', '1' => 'Yes']
                             );
                             ?>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-xs-4 col-lg-3">
                             <?=
                             $form->field($orderinfomodel, 'wooden')->textInput()->dropDownList(
                                     ['0' => 'No', '1' => 'Yes']
@@ -171,14 +171,14 @@ use kartik\date\DatePicker;
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-xs-4 col-lg-3">
                             <?=
                             $form->field($orderinfomodel, 'packed')->textInput()->dropDownList(
                                     ['0' => 'No', '1' => 'Yes']
                             );
                             ?>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-xs-4 col-lg-3">
                             <?=
                             $form->field($orderinfomodel, 'packagetype')->textInput(['maxlength' => true])->dropDownList(
                                     ['woodenitem' => 'Wooden Item', 'glass' => 'Glass']
@@ -186,7 +186,7 @@ use kartik\date\DatePicker;
                             ?>
 
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-xs-4 col-lg-3">
                             <?= $form->field($ordermodel, 'offerprice')->textInput() ?>
                         </div>
                     </div>

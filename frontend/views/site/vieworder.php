@@ -23,7 +23,7 @@ $this->title = 'Order placed';
           <div class="col-xs-2"><div class="row"><div class="col-xs-12"><strong>Width</strong></div></div><div class="row"><div class="col-xs-12"><?= $model1->width." inch";?></div></div></div>
          <div class="col-xs-2"><div class="row"><div class="col-xs-12"><strong>Height</strong></div></div><div class="row"><div class="col-xs-12"><?= $model1->height." inch";?></div></div></div>
          <div class="col-xs-2"><div class="row"><div class="col-xs-12"><strong>Length</strong></div></div><div class="row"><div class="col-xs-12"><?= $model1->length." inch";?></div></div></div>
-         <div class="col-xs-2"><div class="row"><div class="col-xs-12"><strong>Weight</strong></div></div><div class="row"><div class="col-xs-12"><?= $model1->weight." inch";?></div></div></div>
+         <div class="col-xs-2"><div class="row"><div class="col-xs-12"><strong>Weight</strong></div></div><div class="row"><div class="col-xs-12"><?= $model1->weight." Kg";?></div></div></div>
      </div>
       <div class="row info-div">
           <div class="col-xs-2"><div class="row"><div class="col-xs-12"><strong>Breakable</strong></div></div><div class="row"><div class="col-xs-12"><?= ($model1->breakable == 1) ? 'Yes' : 'No'; ?></div></div></div>

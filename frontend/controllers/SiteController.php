@@ -237,8 +237,8 @@ class SiteController extends Controller {
                     $orderinfomodel->save();
                     return $this->render('afterorder');
                 }
-                print_r($ordermodel->getErrors());
-                print_r($orderinfomodel->getErrors());
+                //print_r($ordermodel->getErrors());
+                //print_r($orderinfomodel->getErrors());
             }
             return $this->render('orderform', [
                         'ordermodel' => $ordermodel, 'orderinfomodel' => $orderinfomodel
@@ -268,8 +268,8 @@ class SiteController extends Controller {
                             return $this->render('afterorder');
                     }
                     else{
-                        print_r($ordermodel->getErrors());
-                        print_r($orderinfomodel->getErrors());
+                        //print_r($ordermodel->getErrors());
+                        //print_r($orderinfomodel->getErrors());
                     }
                     return $this->render('orderform', [
                                 'ordermodel' => $ordermodel, 'orderinfomodel' => $orderinfomodel
@@ -364,7 +364,7 @@ class SiteController extends Controller {
                $quotemodel->quote_from = "customer";
                
                $quotemodel->save();
-               print_r($quotemodel->getErrors());
+               //print_r($quotemodel->getErrors());
             }
             }
         }

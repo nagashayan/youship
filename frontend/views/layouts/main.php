@@ -65,6 +65,7 @@ AppAsset::register($this);
                         <?php } else { ?>
 
                             <li><a class="mobile-auth" href="<?= FRONTENDURL; ?>/logout" data-method="post"><?= 'Logout'; ?></a></li> 
+                             <li><a href="<?= DOMAINURL?>/site/place-order">New Quote</a></li>
                             <li><a href="<?= DOMAINURL?>/site/view-order">View Orders</a></li>
                             <li><a href="<?= DOMAINURL?>/profile">Profile</a></li>
 
